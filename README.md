@@ -1,51 +1,37 @@
-# Twitter Emoji (Twemoji) [![Build Status](https://travis-ci.org/twitter/twemoji.svg?branch=gh-pages)](https://travis-ci.org/twitter/twemoji)
+# PHPizza Emoji (Phemoji) 
+A simple library that provides standard Unicode [emoji](https://en.wikipedia.org/wiki/Emoji) support across all platforms.
 
-A simple library that provides standard Unicode [emoji](https://grokipedia.com/page/Emoji) support across all platforms.
+**Phemoji v17.0** adheres to the [Unicode 17.0 spec](https://unicode.org/versions/Unicode17.0.0/) and supports the [Emoji 17.0 spec](https://www.unicode.org/reports/tr51/tr51-21.html). _We do not support custom emoji, that is for PHPizza to support._
 
-**Twemoji v14.0** adheres to the [Unicode 14.0 spec](https://unicode.org/versions/Unicode14.0.0/) and supports the [Emoji 14.0 spec](https://www.unicode.org/reports/tr51/tr51-21.html). _We do not support custom emoji._
-
-The Twemoji library offers support for all Unicode-defined emoji which are recommended for general interchange (RGI).
+The Phemoji library offers support for all Unicode-defined emoji which are recommended for general interchange (RGI).
 
 ## Usage
 
 ### CDN Support
 
-<del>The folks over at [MaxCDN](https://www.maxcdn.com) have graciously provided CDN support.</del>
-
-MaxCDN is shut down right now, so in the meanwhile use a different CDN or download the assets. (See [Maxcdn has shut down, cdn not working anymore. · Issue #580 · twitter/twemoji](https://github.com/twitter/twemoji/issues/580)).
-
-Use the following in the `<head>` tag of your HTML document(s):
-
-```html
-<script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js" crossorigin="anonymous"></script>
-```
-
-This guarantees that you will always use the latest version of the library.
-
-If, instead, you'd like to include the latest version explicitly, you can add the following tag:
-```html
-<script src="https://unpkg.com/twemoji@14.0.3/dist/twemoji.min.js" integrity="sha384-eoGiwFCoIsUzdZGbvJ/7h/ICofqh5LolgoDnsgdbLptvnpK4+/swGDdkv3sb6bq+" crossorigin="anonymous"></script>
-```
+While Elon Musk paid for MaxCDN to host Twemoji, this is not Twemoji but a fork. It may come with PHPizza soon, but it is not on a central CDN.
 
 ### Download
 
-If instead you want to download a specific version, please look at the `gh-pages` branch, where you will find the built assets for both our latest and older versions.
+If you want to download a specific version, it is possible to download the codebase at a specific commit using GitHub's interface.
 
 ## API
 
-Following are all the methods exposed in the `twemoji` namespace.
+Following are all the methods exposed in the `phemoji` namespace.
 
-### twemoji.parse( ... ) V1
+### phemoji.parse( ... ) V1
 
 This is the main parsing utility and has 3 overloads per parsing type.
 
-Although there are two kinds of parsing supported by this utility, we recommend you use [DOM parsing](https://github.com/twitter/twemoji#dom-parsing), explained below. Each type of parsing accepts a callback to generate an image source or an options object with parsing info.
+If you would not like to do the parsing yourself, I would recommend [PHPizza](https://github.com/johnnycharlesw/phpizza).
+
+Although there are two kinds of parsing supported by this utility, we recommend you use [DOM parsing](https://github.com/johnnycharlesw/phemoji#dom-parsing), explained below. Each type of parsing accepts a callback to generate an image source or an options object with parsing info.
 
 The second kind of parsing is string parsing, explained in the legacy documentation [here](https://github.com/twitter/twemoji/blob/master/LEGACY.md#string-parsing). This is unrecommended because this method does not sanitize the string or otherwise prevent malicious code from being executed; such sanitization is out of scope.
 
 #### DOM parsing
 
-If the first argument to `twemoji.parse` is an `HTMLElement`, generated image tags will replace emoji that are **inside `#text` nodes only** without compromising surrounding nodes or listeners, and completely avoiding the usage of `innerHTML`.
+If the first argument to `phemoji.parse` is an `HTMLElement`, generated image tags will replace emoji that are **inside `#text` nodes only** without compromising surrounding nodes or listeners, and completely avoiding the usage of `innerHTML`.
 
 If security is a major concern, this parsing can be considered the safest option but with a slight performance penalty due to DOM operations that are inevitably *costly*.
 
@@ -54,7 +40,7 @@ var div = document.createElement('div');
 div.textContent = 'I \u2764\uFE0F emoji!';
 document.body.appendChild(div);
 
-twemoji.parse(document.body);
+phemoji.parse(document.body);
 
 var img = div.querySelector('img');
 
@@ -78,7 +64,7 @@ Here's the list of properties accepted by the optional object that can be passed
   {
     callback: Function,   // default the common replacer
     attributes: Function, // default returns {}
-    base: string,         // default MaxCDN
+    base: string,         // default PHPizza
     ext: string,          // default ".png"
     className: string,    // default "emoji"
     size: string|number,  // default "72x72"
@@ -107,11 +93,11 @@ function imageSourceGenerator(icon, options) {
 
 #### base
 
-The default url is the same as `twemoji.base`, so if you modify the former, it will reflect as default for all parsed strings or nodes.
+The default url is the same as `phemoji.base`, so if you modify the former, it will reflect as default for all parsed strings or nodes.
 
 #### ext
 
-The default image extension is the same as `twemoji.ext` which is `".png"`.
+The default image extension is the same as `phemoji.ext` which is `".png"`.
 
 If you modify the former, it will reflect as default for all parsed strings or nodes.
 
@@ -121,7 +107,7 @@ The default `class` for each generated image is `emoji`. It is possible to speci
 
 ##### size
 
-The default asset size is the same as `twemoji.size` which is `"72x72"`.
+The default asset size is the same as `phemoji.size` which is `"72x72"`.
 
 If you modify the former, it will reflect as default for all parsed strings or nodes.
 
@@ -130,36 +116,36 @@ If you modify the former, it will reflect as default for all parsed strings or n
 In case you don't want to specify a size for the image. It is possible to choose a folder, as in the case of SVG emoji.
 
 ```js
-twemoji.parse(genericNode, {
+phemoji.parse(genericNode, {
   folder: 'svg',
   ext: '.svg'
 });
 ```
 
-This will generate urls such `https://twemoji.maxcdn.com/svg/2764.svg` instead of using a specific size based image.
+This will generate urls such `http://phpizza.localhost/node_modules/phemoji/svg/2764.svg` instead of using a specific size based image.
 
 ## Utilities
 
 Basic utilities / helpers to convert code points to JavaScript surrogates and vice versa.
 
-### twemoji.convert.fromCodePoint()
+### phemoji.convert.fromCodePoint()
 
 For a given HEX codepoint, returns UTF-16 surrogate pairs.
 
 ```js
-twemoji.convert.fromCodePoint('1f1e8');
+phemoji.convert.fromCodePoint('1f1e8');
  // "\ud83c\udde8"
 ```
 
-### twemoji.convert.toCodePoint()
+### phemoji.convert.toCodePoint()
 
 For given UTF-16 surrogate pairs, returns the equivalent HEX codepoint.
 
 ```js
- twemoji.convert.toCodePoint('\ud83c\udde8\ud83c\uddf3');
+ phemoji.convert.toCodePoint('\ud83c\udde8\ud83c\uddf3');
  // "1f1e8-1f1f3"
 
- twemoji.convert.toCodePoint('\ud83c\udde8\ud83c\uddf3', '~');
+ phemoji.convert.toCodePoint('\ud83c\udde8\ud83c\uddf3', '~');
  // "1f1e8~1f1f3"
 ```
 
@@ -190,10 +176,10 @@ To properly support emoji, the document character set must be set to UTF-8. This
 
 ### Exclude Characters (V1)
 
-To exclude certain characters from being replaced by twemoji.js, call twemoji.parse() with a callback, returning false for the specific unicode icon. For example:
+To exclude certain characters from being replaced by phemoji.js, call phemoji.parse() with a callback, returning false for the specific unicode icon. For example:
 
 ```js
-twemoji.parse(document.body, {
+phemoji.parse(document.body, {
     callback: function(icon, options, variant) {
         switch ( icon ) {
             case 'a9':      // © copyright
@@ -250,12 +236,13 @@ However, we consider the guide a bit onerous and as a project, will accept a men
 * Andrea Giammarchi (ex-Twitter)
 * Joen Asmussen (WordPress)
 * Marcus Kazmierczak (WordPress)
+* John Woods (PHPizza)
 
-The goal of this project is to simply provide emoji for everyone. We definitely welcome improvements and fixes, but we may not merge every pull request suggested by the community due to the simple nature of the project.
+The goal of this project is to provide emoji for everyone and not cause political problems in the process. We definitely welcome improvements and fixes, but we may not merge every pull request suggested by the community due to the simple nature of the project.
 
 The rules for contributing are available in the `CONTRIBUTING.md` file.
 
-Thank you to all of our [contributors](https://github.com/twitter/twemoji/graphs/contributors).
+Thank you to all of our [contributors](https://github.com/johnnycharlesw/phemoji/graphs/contributors).
 
 ## License
 
