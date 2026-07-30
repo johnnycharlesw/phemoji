@@ -1,4 +1,4 @@
-# Twemoji Legacy API (V1)
+# Phemoji Legacy API (V1)
 
 ## Usage
 
@@ -26,7 +26,7 @@ Following are all the methods exposed in the `twemoji` namespace.
 
 This is the main parsing utility and has 3 overloads per parsing type.
 
-There are mainly two kinds of parsing: [string parsing](https://github.com/twitter/twemoji#string-parsing) and [DOM parsing](https://github.com/twitter/twemoji#dom-parsing).
+There are mainly two kinds of parsing: [string parsing](https://github.com/johnnycharlesw/phemoji#string-parsing) and [DOM parsing](https://github.com/johnnycharlesw/phemoji#dom-parsing).
 
 Each of them accepts a callback to generate an image source or an options object with parsing info.
 
@@ -296,12 +296,6 @@ To exclude certain characters from being replaced by twemoji.js, call twemoji.pa
 ```js
 twemoji.parse(document.body, {
     callback: function(icon, options, variant) {
-        switch ( icon ) {
-            case 'a9':      // © copyright
-            case 'ae':      // ® registered trademark
-            case '2122':    // ™ trademark
-                return false;
-        }
         return ''.concat(options.base, options.size, '/', icon, options.ext);
     }
 });

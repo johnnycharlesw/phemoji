@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /*! Copyright Twitter Inc. and other contributors. Licensed under MIT *//*
-    https://github.com/twitter/twemoji/blob/gh-pages/LICENSE
+    https://github.com/johnnycharlesw/phemoji/blob/gh-pages/LICENSE
 */
 
 const fs = require('fs-extra');
@@ -67,5 +67,5 @@ function updateSriScriptReference(filename) {
 updateSriScriptReference(file('README.md'));
 
 // Copy the png assets and svgs to the dist folder
-fs.copySync(file('assets/svg'), distFile('svg'));
+// fs.copySync(file('assets/svg'), distFile('svg'));
 fs.copySync(file('assets/72x72'), distFile('72x72'));

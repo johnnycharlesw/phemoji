@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
  /*! Copyright Twitter Inc. and other contributors. Licensed under MIT *//*
-     https://github.com/twitter/twemoji/blob/gh-pages/LICENSE
+     https://github.com/johnnycharlesw/phemoji/blob/gh-pages/LICENSE
  */
 
 // dependencies
@@ -24,12 +24,12 @@ function createPhemoji() {
     'var phemoji = (' +
     function (
       /*! Copyright Twitter Inc., John Charles Woods, and other contributors. Licensed under MIT *//*
-        https://github.com/twitter/twemoji/blob/gh-pages/LICENSE
+        https://github.com/johnnycharlesw/phemoji/blob/gh-pages/LICENSE
       */
 
       // WARNING:   this file is generated automatically via
       //            `node scripts/build.js`
-      //            please update its `createTwemoji` function
+      //            please update its `createPhemoji` function
       //            at the bottom of the same file instead.
 
     ) {

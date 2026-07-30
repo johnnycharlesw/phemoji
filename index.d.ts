@@ -11,7 +11,7 @@ export type ParseCallback = (icon: string, options: object, variant: string) => 
 
 export type ReplacerFunction = (substring: string, ...args: any[]) => string;
 
-export type TwemojiOptions = {
+export type PhemojiOptions = {
   /**
    * Default: Cloudflare
    */
@@ -46,7 +46,7 @@ export type TwemojiOptions = {
   attributes?(icon: string, variant: string): object;
 }
 
-export type Twemoji = {
+export type Phemoji = {
   base: string;
   ext: string;
   className: string;
@@ -60,10 +60,10 @@ export type Twemoji = {
      *          i.e. \uD83D\uDCA9
      *
      * @example
-     *  twemoji.convert.fromCodePoint('1f1e8');
+     *  phemoji.convert.fromCodePoint('1f1e8');
      *  // "\ud83c\udde8"
      *
-     *  '1f1e8-1f1f3'.split('-').map(twemoji.convert.fromCodePoint).join('')
+     *  '1f1e8-1f1f3'.split('-').map(phemoji.convert.fromCodePoint).join('')
      *  // "\ud83c\udde8\ud83c\uddf3"
      */
     fromCodePoint(hexCodePoint: string): string;
@@ -76,21 +76,21 @@ export type Twemoji = {
      * @return  string  utf16 transformed into codepoint, i.e. '1F4A9'
      *
      * @example
-     *  twemoji.convert.toCodePoint('\ud83c\udde8\ud83c\uddf3');
+     *  phemoji.convert.toCodePoint('\ud83c\udde8\ud83c\uddf3');
      *  // "1f1e8-1f1f3"
      *
-     *  twemoji.convert.toCodePoint('\ud83c\udde8\ud83c\uddf3', '~');
+     *  phemoji.convert.toCodePoint('\ud83c\udde8\ud83c\uddf3', '~');
      *  // "1f1e8~1f1f3"
      */
     toCodePoint(utf16surrogatePairs: string, sep?: string): string;
   };
-  parse<T extends string | HTMLElement>(node: T, options?: TwemojiOptions | ParseCallback): T;
+  parse<T extends string | HTMLElement>(node: T, options?: PhemojiOptions | ParseCallback): T;
   replace(text: string, replacer: string | ReplacerFunction): string;
   test(text: string): boolean;
   onerror(): void;
 };
 
-declare module 'twemoji' {
-  const twemoji: Twemoji;
-  export default twemoji;
+declare module 'phemoji' {
+  const phemoji: Phemoji;
+  export default phemoji;
 }

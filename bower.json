@@ -1,21 +1,21 @@
 {
-  "name": "twemoji",
+  "name": "phemoji",
   "description": "A Unicode standard based way to implement emoji across all platforms.",
-  "main": "./2/twemoji.amd.js",
+  "main": "./2/phemoji.amd.js",
   "ignore": [
     "*",
     "!2/72x72/*",
-    "!2/svg/*",
-    "!2/twemoji.js",
-    "!2/twemoji.*.js",
+    "!2/phemoji.js",
+    "!2/phemoji.*.js",
     "!package.json",
     "!LICENSE",
     "!README.md"
   ],
-  "twemoji": "git://github.com/twitter/twemoji.git#gh-pages",
-  "homepage": "https://github.com/twitter/twemoji",
+  "phemoji": "git://github.com/johnnycharlesw/phemoji.git#gh-pages",
+  "homepage": "https://github.com/johnnycharlesw/phemoji",
   "authors": [
-    "Twitter, Inc."
+    "Twitter, Inc.",
+    "John Charles Woods"
   ],
   "moduleType": [
     "amd"

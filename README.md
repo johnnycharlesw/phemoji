@@ -9,7 +9,7 @@ The Phemoji library offers support for all Unicode-defined emoji which are recom
 
 ### CDN Support
 
-While Elon Musk paid for MaxCDN to host Twemoji, this is not Twemoji but a fork. It may come with PHPizza soon, but it is not on a central CDN.
+While Elon Musk paid for MaxCDN to host Phemoji, this is not Phemoji but a fork. ~~It may come with PHPizza soon, but it is not on a central CDN.~~It has now been added into PHPizza
 
 ### Download
 
@@ -17,17 +17,57 @@ If you want to download a specific version, it is possible to download the codeb
 
 ## API
 
-Following are all the methods exposed in the `phemoji` namespace.
+If you would not like to do the parsing yourself, I would recommend [PHPizza](https://github.com/johnnycharlesw/phpizza).
+
+But anyways, following are all the methods exposed in the `phemoji` namespace in JavaScript. But, I'd recommend you use PHP on the server instead:
+```php
+    protected function loadPhemojiAssets()
+    {
+        $map = [];
+        $files = glob($_SERVER['DOCUMENT_ROOT'] . '/assets/phemoji/assets/72x72/*.png');
+
+        foreach ($files as $file) {
+            $name = pathinfo($file, PATHINFO_FILENAME);
+            $codepoints = explode('-', $name);
+
+            $sequence = '';
+
+            foreach ($codepoints as $codepoint) {
+                $sequence .= mb_chr(hexdec($codepoint), 'UTF-8');
+            }
+
+            $map[$sequence] = '/assets/72x72/'. basename($file);
+        }
+
+        uksort($map, function ($a, $b) {
+            return mb_strlen($b, 'UTF-8') <=> mb_strlen($a, 'UTF-8');
+        });
+
+        return $map;
+    }
+
+    protected function replacePhemoji($html)
+    {
+        $emojiMap = $this->loadPhemojiAssets();
+
+        foreach ($emojiMap as $sequence => $asset) {
+            $newline = "\n";
+            $img = $newline . '<img class="phemoji" src="/assets/phemoji/' . $asset . '"/>'. $newline;
+
+            $html = str_replace($sequence, $img, $html);
+        }
+
+        return $html;
+    }
+```
 
 ### phemoji.parse( ... ) V1
 
 This is the main parsing utility and has 3 overloads per parsing type.
 
-If you would not like to do the parsing yourself, I would recommend [PHPizza](https://github.com/johnnycharlesw/phpizza).
-
 Although there are two kinds of parsing supported by this utility, we recommend you use [DOM parsing](https://github.com/johnnycharlesw/phemoji#dom-parsing), explained below. Each type of parsing accepts a callback to generate an image source or an options object with parsing info.
 
-The second kind of parsing is string parsing, explained in the legacy documentation [here](https://github.com/twitter/twemoji/blob/master/LEGACY.md#string-parsing). This is unrecommended because this method does not sanitize the string or otherwise prevent malicious code from being executed; such sanitization is out of scope.
+The second kind of parsing is string parsing, explained in the legacy documentation [here](https://github.com/johnnycharlesw/phemoji/blob/master/LEGACY.md#string-parsing). This is unrecommended because this method does not sanitize the string or otherwise prevent malicious code from being executed; such sanitization is out of scope.
 
 #### DOM parsing
 
@@ -181,12 +221,6 @@ To exclude certain characters from being replaced by phemoji.js, call phemoji.pa
 ```js
 phemoji.parse(document.body, {
     callback: function(icon, options, variant) {
-        switch ( icon ) {
-            case 'a9':      // © copyright
-            case 'ae':      // ® registered trademark
-            case '2122':    // ™ trademark
-                return false;
-        }
         return ''.concat(options.base, options.size, '/', icon, options.ext);
     }
 });
@@ -194,11 +228,11 @@ phemoji.parse(document.body, {
 
 ## Legacy API (V1)
 
-If you're still using our V1 API, you can read our legacy documentation [here](https://github.com/twitter/twemoji/tree/master/LEGACY.md).
+If you're still using our V1 API, you can read our legacy documentation [here](https://github.com/johnnycharlesw/phemoji/tree/master/LEGACY.md).
 
 ## Contributing
 
-The contributing documentation can be found [here](https://github.com/twitter/twemoji/tree/master/CONTRIBUTING.md).
+The contributing documentation can be found [here](https://github.com/johnnycharlesw/phemoji/tree/master/CONTRIBUTING.md).
 
 ## Attribution Requirements
 
@@ -208,23 +242,23 @@ However, we consider the guide a bit onerous and as a project, will accept a men
 
 ## Community Projects
 
-* [Twemoji Cheatsheet](https://twemoji-cheatsheet.vercel.app) by [@ShahriarKh](https://github.com/ShahriarKh): An easy-to-use cheatsheet for exploring, copying and downloading emojis!
-* [Twemoji Amazing](https://github.com/SebastianAigner/twemoji-amazing) by [@SebastianAigner](https://github.com/SebastianAigner): Use Twemoji using CSS classes (like [Font Awesome](http://fortawesome.github.io/Font-Awesome/)).
-* [Twemoji Ruby](https://github.com/jollygoodcode/twemoji) by [@JollyGoodCode](https://twitter.com/jollygoodcode): Use Twemoji in Ruby.
-* [Twemoji Utils](https://github.com/gustavwilliam/twemoji-utils) by [@gustavwilliam](https://github.com/gustavwilliam): Utilities for finding and downloading Twemoji source files.
-* [Twemoji for Pencil](https://github.com/nathanielw/Twemoji-for-Pencil) by [@Nathanielnw](https://twitter.com/nathanielnw): Use Twemoji in Pencil.
-* [FrwTwemoji - Twemoji in dotnet](http://github.frenchw.net/FrwTwemoji/) by [@FrenchW](https://twitter.com/frenchw): Use Twemoji in any dotnet project (C#, asp.net ...).
-* [Emojiawesome - Twemoji for Yellow](https://github.com/datenstrom/yellow-extensions/tree/master/source/emojiawesome) by [@datenstrom](https://github.com/datenstrom/): Use Twemoji on your website.
-* [EmojiPanel for Twitter](https://github.com/danbovey/EmojiPanel) by [@danielbovey](https://twitter.com/danielbovey/status/749580050274582528): Insert Twemoji into your tweets on twitter.com.
-* [Twitter Color Emoji font](https://github.com/eosrei/twemoji-color-font) by [@bderickson](https://twitter.com/bderickson): Use Twemoji as your system default font on Linux & OS X.
-* [Emojica](https://github.com/xoudini/emojica) by [@xoudini](https://twitter.com/xoudini): An iOS framework allowing you to replace all standard emoji in strings with Twemoji.
-* [gwt-twemoji](https://github.com/phpmonkeys-de/gwt-twemoji) by [@nbartels](https://github.com/nbartels): Use Twemoji in GWT
-* [JavaFXEmojiTextFlow](https://github.com/pavlobu/emoji-text-flow-javafx) by [@pavlobu](https://github.com/pavlobu): A JavaFX library allowing you to replace all standard emoji in extended EmojiTextFlow with Twemoji.
-* [Vue Twemoji Picker](https://github.com/kevinfaguiar/vue-twemoji-picker) by [@kevinfaguiar](https://github.com/kevinfaguiar): A fast plug-n-play Twemoji Picker (+textarea for Twemoji rendering) for Vue.
-* [Unmaintained] [Twemoji Awesome](http://ellekasai.github.io/twemoji-awesome/) by [@ellekasai](https://twitter.com/ellekasai/): Use Twemoji using CSS classes (like [Font Awesome](http://fortawesome.github.io/Font-Awesome/)).
-* [EmojiOnRoku](https://github.com/KasperGam/EmojiOnRoku) by [@KasperGam](https://github.com/KasperGam): Use Twemoji on Roku!
-* [LaTeX Twemoji](https://gitlab.com/rossel.jost/latex-twemojis) by [@rossel.jost](https://gitlab.com/rossel.jost): Use Twemoji in LaTeX.
-* [PHP Twemoji](https://github.com/Astrotomic/php-twemoji) by [@Astrotomic](https://github.com/Astrotomic): Use twemoji within your PHP website project's by replacing standard Emoji with twemoji urls.
+* [Phemoji Cheatsheet](https://twemoji-cheatsheet.vercel.app) by [@ShahriarKh](https://github.com/ShahriarKh): An easy-to-use cheatsheet for exploring, copying and downloading emojis!
+* [Phemoji Amazing](https://github.com/SebastianAigner/twemoji-amazing) by [@SebastianAigner](https://github.com/SebastianAigner): Use Phemoji using CSS classes (like [Font Awesome](http://fortawesome.github.io/Font-Awesome/)).
+* [Phemoji Ruby](https://github.com/jollygoodcode/twemoji) by [@JollyGoodCode](https://twitter.com/jollygoodcode): Use Phemoji in Ruby.
+* [Phemoji Utils](https://github.com/gustavwilliam/twemoji-utils) by [@gustavwilliam](https://github.com/gustavwilliam): Utilities for finding and downloading Phemoji source files.
+* [Phemoji for Pencil](https://github.com/nathanielw/Phemoji-for-Pencil) by [@Nathanielnw](https://twitter.com/nathanielnw): Use Phemoji in Pencil.
+* [FrwPhemoji - Phemoji in dotnet](http://github.frenchw.net/FrwPhemoji/) by [@FrenchW](https://twitter.com/frenchw): Use Phemoji in any dotnet project (C#, asp.net ...).
+* [Emojiawesome - Phemoji for Yellow](https://github.com/datenstrom/yellow-extensions/tree/master/source/emojiawesome) by [@datenstrom](https://github.com/datenstrom/): Use Phemoji on your website.
+* [EmojiPanel for Twitter](https://github.com/danbovey/EmojiPanel) by [@danielbovey](https://twitter.com/danielbovey/status/749580050274582528): Insert Phemoji into your tweets on twitter.com.
+* [Twitter Color Emoji font](https://github.com/eosrei/twemoji-color-font) by [@bderickson](https://twitter.com/bderickson): Use Phemoji as your system default font on Linux & OS X.
+* [Emojica](https://github.com/xoudini/emojica) by [@xoudini](https://twitter.com/xoudini): An iOS framework allowing you to replace all standard emoji in strings with Phemoji.
+* [gwt-twemoji](https://github.com/phpmonkeys-de/gwt-twemoji) by [@nbartels](https://github.com/nbartels): Use Phemoji in GWT
+* [JavaFXEmojiTextFlow](https://github.com/pavlobu/emoji-text-flow-javafx) by [@pavlobu](https://github.com/pavlobu): A JavaFX library allowing you to replace all standard emoji in extended EmojiTextFlow with Phemoji.
+* [Vue Phemoji Picker](https://github.com/kevinfaguiar/vue-twemoji-picker) by [@kevinfaguiar](https://github.com/kevinfaguiar): A fast plug-n-play Phemoji Picker (+textarea for Phemoji rendering) for Vue.
+* [Unmaintained] [Phemoji Awesome](http://ellekasai.github.io/twemoji-awesome/) by [@ellekasai](https://twitter.com/ellekasai/): Use Phemoji using CSS classes (like [Font Awesome](http://fortawesome.github.io/Font-Awesome/)).
+* [EmojiOnRoku](https://github.com/KasperGam/EmojiOnRoku) by [@KasperGam](https://github.com/KasperGam): Use Phemoji on Roku!
+* [LaTeX Phemoji](https://gitlab.com/rossel.jost/latex-twemojis) by [@rossel.jost](https://gitlab.com/rossel.jost): Use Phemoji in LaTeX.
+* [PHP Phemoji](https://github.com/Astrotomic/php-twemoji) by [@Astrotomic](https://github.com/Astrotomic): Use twemoji within your PHP website project's by replacing standard Emoji with twemoji urls.
 
 ## Committers and Contributors
 

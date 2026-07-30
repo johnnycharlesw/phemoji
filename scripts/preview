@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /*! Copyright Twitter Inc. and other contributors. Licensed under MIT *//*
-    https://github.com/twitter/twemoji/blob/gh-pages/LICENSE
+    https://github.com/johnnycharlesw/phemoji/blob/gh-pages/LICENSE
 */
 
 // dependencies
@@ -19,13 +19,13 @@ function distFile(...which) {
   return path.join(__dirname, '..', 'dist', ...which);
 }
 
-fs.readdir(file('assets/svg'), function (err, files) {
+fs.readdir(file('assets/72x72'), function (err, files) {
   var page = fs.readFileSync(file('src/templates/preview.html'))
     .toString()
     .replace(
       '{{emoji-list}}',
-      '<li>' + files.map(function (filename) {
-        var codepoints = filename.replace('.svg', '').split('-');
+      '<li class="phemoji">' + files.map(function (filename) {
+        var codepoints = filename.replace('.png', '').split('-');
         var emoji = codepoints.map(function(codepoint) {
           return Utils.fromCodePoint(codepoint);
         }).join('');
@@ -48,16 +48,5 @@ fs.readdir(file('assets/svg'), function (err, files) {
       })
     )
 
-  );
-  fs.writeFileSync(
-    distFile('preview-svg.html'),
-    page.replace(
-      '{{emoji-options}}',
-      JSON.stringify({
-        folder: 'svg',
-        ext: '.svg',
-        base: ''
-      })
-    )
   );
 });

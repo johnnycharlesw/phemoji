@@ -37,14 +37,14 @@ have good reasons for rejecting.
 
 If you'd like to test and/or contribute please follow these instructions.
 
-[Fork this repo on GitHub](https://github.com/twitter/twemoji.git/fork)
+[Fork this repo on GitHub](https://github.com/johnnycharlesw/phemoji.git/fork)
 
 ### Setup
 
 ```bash
 # clone your fork
-git clone -b master https://github.com/$YOUR_USERNAME/twemoji.git/
-cd twemoji
+git clone -b master https://github.com/$YOUR_USERNAME/phemoji.git/
+cd phemoji
 
 # install dependencies
 yarn install
@@ -97,5 +97,5 @@ commits.
 By contributing your code:
 
 You agree to license your contribution under the terms of the MIT (for code) and CC-BY (for graphics) licenses
-<https://github.com/twitter/twemoji/blob/gh-pages/LICENSE>
-<https://github.com/twitter/twemoji/blob/gh-pages/LICENSE-GRAPHICS>
+<https://github.com/johnnycharlesw/phemoji/blob/gh-pages/LICENSE>
+<https://github.com/johnnycharlesw/phemoji/blob/gh-pages/LICENSE-GRAPHICS>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Twitter Emoji (Twemoji) Preview</title>
+    <title>PHPizza Emoji (phemoji) Preview</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <style>
     ul.emoji-list * {
@@ -25,7 +25,7 @@
       vertical-align: -0.1em;
     }
     </style>
-    <script src="https://twemoji.maxcdn.com/v/{{version}}/twemoji.min.js" integrity="{{integrityHash}}"crossorigin="anonymous"></script>
+    <script src="./phemoji.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <ul class="emoji-list">
@@ -35,7 +35,7 @@
     var ul = document.getElementsByTagName('ul')[0];
     var total = ul.getElementsByTagName('li').length;
     var elapsed = +new Date;
-    twemoji.parse(ul, {{emoji-options}});
+    phemoji.parse(ul, {{emoji-options}});
     elapsed = (+new Date) - elapsed;
     document.body.insertBefore(
       document.createTextNode(total + ' emoji parsed in ' + elapsed + 'ms'),
