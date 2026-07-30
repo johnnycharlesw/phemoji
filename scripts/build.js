@@ -16,14 +16,14 @@ function file(which) {
   return path.join(__dirname, '..', which);
 }
 
-function createTwemoji() {
+function createPhemoji() {
   fs.mkdirSync('dist/',{ recursive: true })
   fs.writeFileSync(
     file('dist/phemoji.js'),
     '/*jslint indent: 2, browser: true, bitwise: true, plusplus: true */\n' +
-    'var twemoji = (' +
+    'var phemoji = (' +
     function (
-      /*! Copyright Twitter Inc. and other contributors. Licensed under MIT *//*
+      /*! Copyright Twitter Inc., John Charles Woods, and other contributors. Licensed under MIT *//*
         https://github.com/twitter/twemoji/blob/gh-pages/LICENSE
       */
 
@@ -47,7 +47,7 @@ function createTwemoji() {
         /////////////////////////
 
           // default assets url, by default will be Twitter Inc. CDN
-          base: 'https://cdnjs.cloudflare.com/ajax/libs/twemoji/$VERSION/',
+          base: 'http://phpizza.localhost/node_modules/phemoji/',
 
           // default assets file extensions, by default '.png'
           ext: '.png',
@@ -248,7 +248,7 @@ function createTwemoji() {
 
         // RegExp based on emoji's official Unicode standards
         // http://www.unicode.org/Public/UNIDATA/EmojiSources.txt
-        re = /twemoji/,
+        re = /phemoji/,
 
         // avoid runtime RegExp creation for not so smart,
         // not JIT based, and old browsers / engines
@@ -607,6 +607,6 @@ function createTwemoji() {
 
 }
 
-createTwemoji();
+createPhemoji();
 require('./create-dist');
 require('./preview');

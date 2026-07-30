@@ -38,7 +38,7 @@ fs.readdir(file('assets/svg'), function (err, files) {
       }).join('</li>\n      <li>')+ '</li>'
     )
     .replace('{{version}}', version)
-    .replace('{{integrityHash}}', Utils.getIntegrityHash(distFile('twemoji.min.js')));
+    .replace('{{integrityHash}}', Utils.getIntegrityHash(distFile('phemoji.min.js')));
   fs.writeFileSync(
     distFile('preview.html'),
     page.replace(

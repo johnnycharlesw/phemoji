@@ -18,24 +18,24 @@ function distFile(...which) {
 }
 
 fs.writeFileSync(
-  distFile('twemoji.npm.js'),
+  distFile('phemoji.npm.js'),
   [
     'var location = global.location || {};',
-    fs.readFileSync(distFile('twemoji.js')),
+    fs.readFileSync(distFile('phemoji.js')),
     'if (!location.protocol) {',
-    '  twemoji.base = twemoji.base.replace(/^http:/, "");',
+    '  phemoji.base = phemoji.base.replace(/^http:/, "");',
     '}',
-    'module.exports = twemoji;'
+    'module.exports = phemoji;'
   ].join('\n')
 );
 
 fs.writeFileSync(
-  distFile('twemoji.amd.js'),
+  distFile('phemoji.amd.js'),
   'define(function () {\n' +
-    fs.readFileSync(distFile('twemoji.js')).toString().replace(
+    fs.readFileSync(distFile('phemoji.js')).toString().replace(
       /^(.)/gm, '  $1'
     ) +
-  '\n  return twemoji;\n});'
+  '\n  return phemoji;\n});'
 );
 
 spawnSync(
@@ -43,20 +43,20 @@ spawnSync(
   [
     'uglifyjs',
     '--verbose',
-    distFile('twemoji.js'),
+    distFile('phemoji.js'),
     '-o',
-    distFile('twemoji.tmp.js')
+    distFile('phemoji.tmp.js')
   ]
 );
 
 const copyright = '/*! Copyright Twitter Inc. and other contributors. Licensed under MIT */';
-const minifiedContents = fs.readFileSync(distFile('twemoji.tmp.js'));
-fs.unlinkSync(distFile('twemoji.tmp.js'));
+const minifiedContents = fs.readFileSync(distFile('phemoji.tmp.js'));
+fs.unlinkSync(distFile('phemoji.tmp.js'));
 
-fs.writeFileSync(distFile('twemoji.min.js'), `${copyright}\n${minifiedContents}`);
-fs.writeFileSync(distFile('twemoji.esm.js'), `${copyright}\n${minifiedContents}\nexport default twemoji;`);
+fs.writeFileSync(distFile('phemoji.min.js'), `${copyright}\n${minifiedContents}`);
+fs.writeFileSync(distFile('phemoji.esm.js'), `${copyright}\n${minifiedContents}\nexport default phemoji;`);
 
-const integrityHash = getIntegrityHash(distFile('twemoji.min.js'));
+const integrityHash = getIntegrityHash(distFile('phemoji.min.js'));
 const { version } = require('../package.json');
 
 function updateSriScriptReference(filename) {
